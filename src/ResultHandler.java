@@ -8,12 +8,12 @@ import java.util.stream.Collectors;
 public class ResultHandler {
     private FileWriter innerFileWriter;
     private FileReader innerFileReader;
-    public ResultHandler(FileReader fileReader, FileWriter filewriter) throws IOException {
+    public ResultHandler(FileReader fileReader, FileWriter filewriter) {
         innerFileWriter = filewriter;
         innerFileReader = fileReader;
     }
 
-    public long CountGames() throws IOException {
+    public long CountGames() {
         Scanner fileScanner = new Scanner(innerFileReader);
         Set<MatchResult> games = fileScanner.findAll("Game №\\d{1,}").collect(Collectors.toSet());
         System.out.println(games.size());
