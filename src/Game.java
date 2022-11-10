@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class Game {
-
-
     public void newGame() throws IOException {
         String gameRepeat = "n";
         long gameNumber = 0;
@@ -22,11 +20,11 @@ public class Game {
 
         while (gameRepeat.equals("n")){
             FileWriter fileWriter = new FileWriter("src/save/result.txt", true);
-            FileReader fileReader = new FileReader("ser/save/result.txt");
+            FileReader fileReader = new FileReader("src/save/result.txt");
             ResultHandler resultHandler = new ResultHandler(fileReader,fileWriter);
             for (File f: lst) {
                 long newNum = resultHandler.CountGames(f);
-                gameNumber = gameNumber>newNum? gameNumber:newNum;
+                gameNumber = Math.max(gameNumber, newNum);
             }
 
             ++gameNumber;
