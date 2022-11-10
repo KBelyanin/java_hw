@@ -13,20 +13,27 @@ public class ResultHandler {
         innerFileReader = fileReader;
     }
 
-    public long CountGames() {
-        Scanner fileScanner = new Scanner(innerFileReader);
-        Set<MatchResult> games = fileScanner.findAll("Game №\\d{1,}").collect(Collectors.toSet());
-        System.out.println(games.size());
-        Set<String> gamesString = new HashSet<>();
-        for(MatchResult m : games) {
-            gamesString.add(m.group());
-            System.out.println(m.group());
-        }
+    public long CountGames(File file) {
+        Scanner fileScanner = null;
         List<Integer> gamesNums = new ArrayList<>();
-        for(String s : gamesString) {
-            gamesNums.add(Integer.parseInt(s.replaceAll("\\D", "")));
+        try {
+            fileScanner = new Scanner(file);
+            Set<MatchResult> games = fileScanner.findAll("Game №\\d{1,}").collect(Collectors.toSet());
+            System.out.println(games.size());
+            Set<String> gamesString = new HashSet<>();
+            for (MatchResult m : games) {
+                gamesString.add(m.group());
+                System.out.println(m.group());
+            }
+            gamesNums = new ArrayList<>();
+            for (String s : gamesString) {
+                gamesNums.add(Integer.parseInt(s.replaceAll("\\D", "")));
+            }
+            gamesNums.sort(Collections.reverseOrder());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        gamesNums.sort(Collections.reverseOrder());
+
         return gamesNums.get(0);
     }
 
